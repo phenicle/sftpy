@@ -7,7 +7,7 @@ with open("README", 'r') as f:
 
 setup(
    name='sftpy',
-   version='1.0.3',
+   version='1.0.4',
    description='A python SFTP module that supports mget-style filename globby patterns',
    license="LGPLv3",
    long_description='Have you ever longed for mget in a python SFTP module? Leave those kludgy workarounds behind.',

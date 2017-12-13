@@ -55,9 +55,9 @@ STATE_LOGGED_IN = 2
 
 pp = pprint.PrettyPrinter(indent=4)
 
-class Sftpy(object):
+class Sftp(object):
 	""" 
-	The Sftpy class
+	The Sftp class
 
     Arguments: <host-identifier> <user-account-identifier>
 
@@ -397,8 +397,9 @@ class Sftpy(object):
 		self.session_handle.expect(self.prompt)
 
 if __name__ == '__main__':
+	# from sftpy.tools import Sftp
 
-	with Sftpy('ftp_sftp_test_server','sftptest') as sftp:
+	with Sftp('ftp_sftp_test_server','sftptest') as sftp:
 		sftp.version()
 		sftp.pwd()
 		sftp.ls()
