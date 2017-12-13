@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: sftpy
+Version: 1.0.1
+Summary: A python SFTP module that supports mget-style filename globby patterns
+Home-page: https://github.com/phenicle/sftpy
+Author: Phenicle
+Author-email: pheniclebeefheart@gmail.com
+License: LGPLv3
+Description-Content-Type: UNKNOWN
+Description: Have you ever longed for mget in a python SFTP module? Leave those kludgy workarounds behind.
+Platform: UNKNOWN

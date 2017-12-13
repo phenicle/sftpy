@@ -1,0 +1,11 @@
+LICENSE.txt
+MANIFEST.in
+README
+setup.py
+sftpy/__init__.py
+sftpy/sftpy.py
+sftpy.egg-info/PKG-INFO
+sftpy.egg-info/SOURCES.txt
+sftpy.egg-info/dependency_links.txt
+sftpy.egg-info/requires.txt
+sftpy.egg-info/top_level.txt

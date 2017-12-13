@@ -27,10 +27,12 @@ sftp_test_server:sftpuser:thisisnotarealpassword
 ### Pythonic idioms
 
 ```python
-  with Sftpy('sftp_test_server','sftpuser') as sftp:
-      sftp.version()
-      sftp.pwd()
-      sftp.ls()
-      sftp.bye()
+from sftpy.tools import Sftp
+
+with Sftp('sftp_test_server','sftpuser') as sftp:
+    sftp.version()
+    sftp.pwd()
+    sftp.ls()
+    sftp.bye()
 ```
 
