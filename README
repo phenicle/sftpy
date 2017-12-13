@@ -1,0 +1,3 @@
+Sftpy - A python SFTP module that supports mget-style filename globby patterns.
+
+Have you ever longed for mget in a python SFTP module? Leave those kludgy workarounds behind.
