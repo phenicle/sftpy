@@ -138,7 +138,7 @@ class Sftpy(object):
 		"""
 		self.program = find_executable('sftp')
 		if not self.program:
-			raise FileNotFoundError(
+			raise IOError(
     			errno.ENOENT, 
     			os.strerror(errno.ENOENT), 
     			'sftp'
