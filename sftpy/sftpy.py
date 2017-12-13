@@ -30,7 +30,7 @@ import pprint
 from distutils.spawn import find_executable
 import errno
 
-DEBUGGING = True
+DEBUGGING = False
 
 # session debugging constants
 # determines what, if anything
