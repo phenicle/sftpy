@@ -1,0 +1,21 @@
+cd	Change the directory on the remote host.
+chmod	Change the permissions of files on the remote host.
+chown	Change the owner of files on the remote host.
+exit (or quit)	Close the connection to the remote host, and exit SFTP.
+get	Copy a file from the remote host to the local computer.
+help (or ?)	Get help on the use of SFTP commands.
+lcd	Change the directory on the local computer.
+lls	List the contents of the current directory on the local computer.
+lmkdir	Create a directory on the local computer.
+ln (or symlink)	Create a symbolic link for a file on the remote host.
+lpwd	Show the present working directory on the local computer.
+ls (or dir)	List the contents of the current directory on the remote host.
+lumask	Change the local umask value.
+mkdir	Create a directory on the remote host.
+put	Copy a file from the local computer to the remote host.
+pwd	Show the present working directory on the remote host.
+rename	Rename a file on the remote host.
+rm	Delete a file on the remote host.
+rmdir	Remove a directory on the remote host (the directory usually has to be empty).
+version	Display the SFTP version.
+!	Pop out to the shell prompt to enter other commands. To return to SFTP, enter exit. If you combine ! with a command (e.g., !pwd), SFTP executes the command without popping you out to the shell prompt.

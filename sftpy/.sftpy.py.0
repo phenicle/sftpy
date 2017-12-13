@@ -1,0 +1,90 @@
+# sftpy.py
+
+# license placeholder here
+
+"""
+ What: The sftpy python module
+  Why: Because paramiko and modules derived from it
+       (e.g. pysftp) don't support mget.
+       Mget is profoundly useful. Seriously.
+       No matter how high level a transfer module,
+       when it doesn't support mget you could be 
+       forced at any point in time to suddenly 
+       be wrenched back to low level, nuts and
+       bolts coding. Nuts to that.
+"""
+
+import pexpect
+import pprint
+
+DEBUGGING = True
+
+pp = pprint.PrettyPrinter(indent=4)
+
+class Sftpy(object):
+	""" 
+	The Sftpy class
+
+	Required args:
+	 transfer profile name
+
+	Optional positional argument:
+	 sink_path
+
+	Keyword arguments
+
+	 It's assumed that static informational elements associated
+	 with an ftp transfer profile are given by way of a yaml file.
+
+	 Host identifiers, username and password  
+
+	What is the 'sink_path'?
+
+	 It's the path that will receive files if you call 'get(source_path)'
+	 If you call 'put(source_path)', then sink_path is the path at the
+	 remote end that'll receive the files you're uploading. 
+
+	The 'get' method assumes that if source_path contains no slashes,
+	it describes a filename.
+
+	If source_path contains one or more slashes, the directory part and 
+	the filename part are separated. The directory part becomes argument 
+	to a 'chdir' ('cd') and the filename part becomes the pattern used
+	to identify what is downloaded.
+
+	The 'get' method always calls mget if the filename part of
+	source_path contains a splat ('*').
+	"""
+
+	def __init__(self, name, sink_path=None, *args, **kwargs):
+
+		if DEBUGGING:
+			print "Initializing Sftpy object '%s'" % name
+			print "args:"
+			pp.pprint(args)
+			print "kwargs:"
+			pp.pprint(kwargs)
+
+		self.name = name
+
+	def __enter__(self):
+
+		return self
+
+	def __exit__(self, type, value, traceback):
+
+		pass
+
+	def __repr__(self):
+
+		s = '\n'
+		for k in self.__dict__:
+			s += "%5s%20s: %s\n" % (' ',k, self.__dict__[k])
+
+		return s
+
+
+if __name__ == '__main__':
+
+	with Sftpy('a','b', this=1, that=2, tother=3) as sftp:
+		pp.pprint(sftp)
