@@ -22,6 +22,8 @@
 """
 import sys
 import os
+import stat
+from pwd import getpwuid
 import pexpect
 import re
 import pprint
@@ -147,21 +149,69 @@ class Sftpy(object):
 	def get_password_from_environment(self):
 		""" 		
 		  environment variable name:
-		   'sftpypass_<host-identifier>'
+		   'ftpypass_<host-identifier>'
 		"""
 		self.credvarname = 'sftpypass_%s' % (self.host)
-		if self.credvarname in os.environ:
+		if self.credvarname in os.environ and os.environ[self.credvarname]:
 			self.password = os.environ[self.credvarname]
 			if DEBUGGING:
 				print "found password in environment"
 			return True
 		return False
 
+	def credentials_file_is_owned_by_current_user(self,credfile_stat):
+		""" make sure file owned by current user """
+
+		if not credfile_stat.st_uid == os.getuid():
+			raise IOError("Credentials file %d not owned by current user" % (self.creds_filespec))
+			return False
+		return True
+
+	def credentials_file_has_valid_permissions(self,credfile_stat):
+		""" check permissions; should be 600 """
+
+		if DEBUGGING:
+			print "cred file perms:"
+			pp.pprint(credfile_stat.st_mode)
+		# owner must have read
+		if not bool(credfile_stat.st_mode & stat.S_IRUSR):
+			raise IOError("Incorrect file permissions on creds file %s, should be 0600" \
+				% (self.creds_filespec))
+			return False
+
+		# bad if group has any access at all
+		if bool(credfile_stat.st_mode & stat.S_IRWXG):
+			raise IOError("Incorrect file permissions on creds file %s, should be 0600" \
+				% (self.creds_filespec))
+			return False
+
+		# bad if others (world) have any access at all
+		if bool(credfile_stat.st_mode & stat.S_IRWXO):
+			raise IOError("Incorrect file permissions on creds file %s, should be 0600" \
+				% (self.creds_filespec))
+			return False
+
+		return True
+
 	def get_password_from_creds_file(self):
 		""" The credentials file should be located at ~/.sftpy/.creds """
 
  		hdir = os.path.expanduser("~")
 		self.creds_filespec = '%s/.sftpy/.creds' % (hdir)
+		if DEBUGGING:
+			print "seeking %s" % (self.creds_filespec)
+
+		if os.path.isfile(self.creds_filespec):
+			if DEBUGGING:
+				print "found creds file: %s" % self.creds_filespec
+			# get owner and permissions
+			credfile_stat = os.stat(self.creds_filespec)
+			if not self.credentials_file_is_owned_by_current_user(credfile_stat):
+				return False
+
+			if not self.credentials_file_has_valid_permissions(credfile_stat):
+				return False
+
 		try:
 			with open(self.creds_filespec) as creds:
 				""" 
@@ -169,9 +219,13 @@ class Sftpy(object):
 				TODO: should strip spaces and use more robus searching/matching
 				"""
 				for line in creds.readlines():
-					fields = ':'.split(line)
+					fields = line.split(':')
+					if DEBUGGING:
+						print line
+						pp.pprint(fields)
+
 					if fields[0] == self.host and fields[1] == self.user:
-						self.password = fields[3]
+						self.password = fields[2]
 						if DEBUGGING:
 							print "found password in creds file %s" \
 							  % self.creds_filespec
