@@ -446,7 +446,7 @@ class Sftp(object):
 if __name__ == '__main__':
 	# from sftpy.tools import Sftp
 
-	cfgobj = CfgPy(FMT_INI, '/Users/spl/project/incoming/ftpy/ftpy', ['./test.conf'])
+	cfgobj = CfgPy(FMT_INI, '.', ['./test.conf'])
 	#cfgobj.set_file_extension('conf')
 	cfgobj.load()
 	print "host: {}".format(cfgobj.read_element(('sftpcredentials','host')))
